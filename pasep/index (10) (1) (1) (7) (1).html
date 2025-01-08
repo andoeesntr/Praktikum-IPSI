@@ -1,0 +1,869 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Pasep Garage</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+</script>
+<style>
+    html {
+        scroll-behavior: smooth;
+    }
+
+    .menu-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        text-align: center;
+        opacity: 1;
+        transform: translateY(0);
+        transition: opacity 0.5s, transform 0.5s;
+    }
+
+    .menu-tabs {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    .menu-tab {
+        margin: 0 15px;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 18px;
+        color: black;
+        position: relative;
+        cursor: pointer;
+    }
+
+    .menu-tab.active {
+        color: red;
+    }
+
+    .menu-tab.active::after {
+        content: '';
+        display: block;
+        width: 50%;
+        height: 2px;
+        background-color: red;
+        margin: 0 auto;
+        margin-top: 5px;
+    }
+
+    .menu-title {
+        margin-top: 20px;
+        font-size: 24px;
+        color: gray;
+    }
+
+    .category-title {
+        margin-top: 10px;
+        font-size: 32px;
+        font-weight: bold;
+        color: red;
+    }
+
+    .menu-content {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin-top: 30px;
+    }
+
+    .menu-item {
+        text-align: center;
+    }
+
+    .menu-item img {
+        width: 200px;
+        height: 200px;
+        border-radius: 10px;
+    }
+
+    .menu-item h4 {
+        margin-top: 10px;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .menu-item p {
+        color: gray;
+        font-size: 14px;
+    }
+
+    .content {
+        margin-top: 100px; /* Sesuaikan dengan tinggi header */
+        scroll-margin-top: 70px;
+        padding-top: 20px;
+    }
+
+
+    nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 999; /* Agar tetap berada di atas elemen lain */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Opsional, memberikan efek bayangan */
+        background-color: white;
+    }
+
+
+    section {
+        padding-top: 0; /* Adjust padding-top agar section tidak tertutup navbar */
+    }
+
+    /* Efek hover: Teks menyala saat pointer mouse berada di atas */
+nav a:hover {
+    color: rgb(38, 0, 255); /* Warna teks menyala */
+    transition: color 0.3s ease; /* Efek transisi lembut */
+}
+
+/* Efek aktif: Teks tetap menyala saat berada di konten */
+nav a.active {
+    color: rgb(51, 0, 255); /* Warna teks menyala */
+    font-weight: bold; /* Opsional: Membuat teks lebih tebal */
+    transition: color 0.3s ease;
+}
+
+
+    *   {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            padding-top: 60px;
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+            background-size: cover;
+        }
+        
+        .booking-container {
+            display: flex;
+            width: 100%;
+            max-width: 1500px;
+            background: rgba(0, 0, 0, 0.6);
+            background: url('https://raw.githubusercontent.com/andoeesntr/Praktikum-IPSI/main/pasep/img/bg/bg_servis.jpg') no-repeat center center;
+            background-size: cover;
+            color: white;
+            overflow: hidden;
+        }
+
+        .left-content {
+            flex: 1;
+            padding: 50px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color:#fff;
+        }
+
+        .left-content h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .left-content p {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .right-content {
+            flex: 1;
+            position: relative; /* Dibutuhkan untuk pseudo-element */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .right-content::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;  
+            transform: translate(-50%, -50%); /* Memastikan tepat di tengah */
+            width: 80%; /* Ubah sesuai kebutuhan */
+            height: 100%; /* Ubah sesuai kebutuhan */
+            z-index: 0; /* Di bawah konten form */
+            border-radius:20px; /* Opsional */
+        }
+
+        .form-container {
+            width: 80%;
+            max-width: 400px;
+            background: white;
+            background-color: rgba(39, 117, 253, 0.903);
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 4px 10px grey;
+            position: relative;
+            z-index: 1; /* Pastikan form di atas background merah */
+        }
+
+        .form-container h2 {
+            text-align: center;
+            color: white;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .form-container form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-container input,
+        .form-container select,
+        .form-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid;
+            border-radius: 5px;
+            color: black;
+        }
+
+        .form-container button {
+            background: #002654;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .form-container button:hover {
+            background: #004080;
+        }
+    
+        @mediabooking (max-width: 768px) {
+    .right-content::before {
+        width: 95%; /* Background merah menyesuaikan lebar form */
+        height: 100%; /* Sesuaikan tinggi */
+        border-radius: 10px; /* Sesuaikan radius agar form lebih rapi */
+    }
+
+    .form-container {
+        width: 90%; /* Form lebar penuh dengan margin */
+        padding: 20px; /* Kurangi padding agar lebih proporsional */
+    }
+
+    .right-content {
+        padding: 20px; /* Kurangi padding */
+    }
+}
+/* CSS untuk bagian Portfolio */
+.work-process {
+  text-align: center;
+  padding: 40px;
+  background-color: #fff;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.title span {
+  color: blue;
+}
+
+.slider-container {
+  overflow: hidden;
+  width: 960px; /* 3 kotak (300px each) + gap 2x 20px */
+  margin: 0 auto;
+}
+
+.process-slider {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.process-card {
+  background-color: gray;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 300px;
+  height: 300px; /* Tinggi kotak */
+  text-align: center;
+  flex-shrink: 0;
+  margin-right: 20px;
+}
+
+.process-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.step {
+  background-color: blue;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px auto;
+}
+
+.step span {
+  font-size: 18px;
+}
+
+.process-card p {
+  font-size: 16px;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.navigation {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.navigation button {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 50%;
+  font-size: 18px;
+}
+
+.navigation button:hover {
+  background-color: #eee;
+}
+
+
+</style>
+
+
+</head>
+<body class="bg-gray-100">
+<!-- Navbar -->
+<nav class="bg-blue-500 text-white top-0 z-50 shadow-md">
+    <div class="container mx-auto flex justify-between items-center py-4 px-4 lg:px-0">
+        <!-- Logo -->
+        <div class="flex items-center space-x-4">
+            <a href="#home" class="flex items-center">
+                <img 
+                    alt="Logo Perusahaan" 
+                    class="h-10" 
+                    src="https://raw.githubusercontent.com/andoeesntr/Praktikum-IPSI/main/pasep/img/logo/pasep-white.png"
+                    width="100"
+                />
+            </a>
+        </div>
+
+        <!-- Menu Desktop -->
+        <div class="hidden md:flex items-center space-x-6">
+            <a class="text-lg font-semibold hover:underline" href="#home">HOME</a>
+            <a class="text-lg font-semibold hover:underline" href="#about">ABOUT</a>
+            <a class="text-lg font-semibold hover:underline" href="#portfolio">PORTFOLIO</a>
+            <a class="text-lg font-semibold hover:underline" href="#booking">BOOKING</a>
+        </div>
+
+        <!-- Burger Menu for Mobile -->
+        <button id="burger-menu" class="block md:hidden">
+            <i class="fas fa-bars text-xl"></i>
+        </button>
+    </div>
+
+    <!-- Menu Mobile -->
+    <div id="mobile-menu" class="hidden bg-blue-500 md:hidden">
+        <a class="block py-2 px-4 text-lg font-semibold hover:bg-blue-400" href="#home">HOME</a>
+        <a class="block py-2 px-4 text-lg font-semibold hover:bg-blue-400" href="#about">ABOUT</a>
+        <a class="block py-2 px-4 text-lg font-semibold hover:bg-blue-400" href="#portfolio">PORTFOLIO</a>
+        <a class="block py-2 px-4 text-lg font-semibold hover:bg-blue-400" href="#booking">BOOKING</a>
+    </div>
+</nav>
+
+<script>
+    // Function to close the mobile menu
+    function closeMobileMenu() {
+        mobileMenu.classList.add('hidden');
+    }
+
+    // Mobile Menu Toggle
+    const burgerMenu = document.getElementById('burger-menu');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    burgerMenu.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+
+    // Add event listeners to mobile menu links
+    document.querySelectorAll('#mobile-menu a').forEach(link => {
+        link.addEventListener('click', () => {
+            closeMobileMenu(); // Close the menu when a link is clicked
+        });
+    });
+
+    // Scroll Offset Adjustment
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            const targetId = this.getAttribute('href').substring(1);
+            const targetElement = document.getElementById(targetId);
+
+            if (targetElement) {
+                const offset = 80; // Navbar height
+                const elementPosition = targetElement.getBoundingClientRect().top + window.scrollY;
+                const offsetPosition = elementPosition - offset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+
+                // Close the mobile menu after navigating
+                closeMobileMenu();
+            }
+        });
+    });
+
+    // Highlight active nav link on scroll
+    document.addEventListener("DOMContentLoaded", function () {
+        const sections = document.querySelectorAll("section"); // Semua section
+        const navLinks = document.querySelectorAll("nav a"); // Semua link navbar
+
+        function highlightNavLink() {
+            let scrollPosition = window.scrollY + 150; // Offset untuk memastikan navbar tidak tertutupi
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
+                const sectionId = section.getAttribute("id");
+
+                // Cek apakah posisi scroll berada dalam rentang section
+                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                    navLinks.forEach(link => {
+                        link.classList.remove("active"); // Hapus class active dari semua link
+                        if (link.getAttribute("href") === `#${sectionId}`) {
+                            link.classList.add("active"); // Tambahkan class active hanya pada link yang sesuai
+                        }
+                    });
+                }
+            });
+        }
+
+        window.addEventListener("scroll", highlightNavLink); // Deteksi perubahan scroll
+        highlightNavLink(); // Jalankan saat halaman pertama kali dimuat
+    });
+</script>
+
+
+
+    <!-- Bagian Home -->
+<section class="bg-gray-100 py-20" id="home">
+    <div class="container mx-auto text-center">
+        <h2 class="text-3xl font-bold mb-4 animate__animated animate__fadeIn">Selamat Datang di Pasep Garage!</h2>
+        <p class="text-lg text-gray-600 mb-6 animate__animated animate__fadeIn animate__delay-1s">Solusi satu atap untuk semua kebutuhan otomotif Anda. Kami menyediakan berbagai sparepart dan service dengan harga terjangkau.</p>
+        <p class="text-lg text-gray-600 mb-6 animate__animated animate__fadeIn animate__delay-2s">Nikmati layanan pelanggan 24/7, Booking service, spare part kendaraan bermotor yang komplit dengan harga terjangkau</p>
+        <a class="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-600 animate__animated animate__fadeIn animate__delay-3s" href="#about">Jelajahi Tentang Kami</a>
+    </div>
+</section>
+
+    <!-- Bagian About -->
+    <section class="bg-gray-900 text-gray-300 py-12" id="about">
+        <div class="max-w-md mx-auto p-6">
+            <h1 class="text-xl font-bold mb-4 animate__animated animate__fadeIn">ABOUT</h1>
+            <div class="flex items-center mb-4 animate__animated animate__fadeIn">
+                <img alt="WaOne Bengkel Online logo with a hexagon and stylized W" class="w-24 h-24 mr-4" src="https://raw.githubusercontent.com/andoeesntr/Praktikum-IPSI/main/pasep/img/logo/pasep-white.png"/>
+                <div>
+                    <h2 class="text-4xl font-bold text-blue-800">Pasep<span class="text-blue-400">Garage</span></h2>
+                    <h3 class="text-2xl text-gray-500">Bengkel Motor</h3>
+                </div>                
+            </div>
+            <p class="text-sm leading-relaxed animate__animated animate__fadeIn animate__delay-1s">
+                PasepGarage Bengkel adalah website bengkel yang menjual berbagai macam aksesoris dan sparepart serta service yang cepat dan terpercaya motor yang menggunakan sistem untuk memudahkan anda berkonsultasi masalah di motor anda.
+            </p>
+            </p>
+            <!-- Tambahan Konten -->
+            <h2 class="text-2xl font-bold mt-6 animate__animated animate__fadeIn animate__delay-2s">Visi dan Misi</h2>
+            <p class="text-sm leading-relaxed animate__animated animate__fadeIn animate__delay-3s">
+                Menjadi platform digital terpercaya yang memberikan kemudahan, transparansi, dan kenyamanan kepada pelanggan dalam mengakses layanan bengkel, mendukung efisiensi operasional, serta mendorong kemajuan bisnis bengkel menuju era digital.
+            <h2 class="text-2xl font-bold mt-6 animate__animated animate__fadeIn animate__delay-4s">Mengapa Memilih Kami?</h2>
+            <ul class="list-disc list-inside animate__animated animate__fadeIn animate__delay-5s">
+                <li>Beragam pilihan produk dengan harga bersaing.</li>
+                <li>Service cepat dan aman.</li>
+                <li>Layanan pelanggan yang siap membantu 24/7.</li>
+                <li>Transaksi yang aman dan terpercaya.</li>
+            </ul>
+        </div>
+    </section>
+    <!-- our portfolio-->
+    <section class="work-process" id="portfolio">
+        <h2 class="title">OUR <span>PORTFOLIO</span></h2>
+        <div class="slider-container">
+          <div class="process-slider">
+            <div class="process-card">
+              <img src="https://raw.githubusercontent.com/andoeesntr/Praktikum-IPSI/main/portofolio/portofolio1.jpeg">
+            </div>
+            <div class="process-card">
+              <img src="https://raw.githubusercontent.com/andoeesntr/Praktikum-IPSI/main/portofolio/portofolio2.jpeg">
+            </div>
+            <div class="process-card">
+              <img src="https://raw.githubusercontent.com/andoeesntr/Praktikum-IPSI/main/portofolio/portofolio3.jpeg">
+            </div>
+            <div class="process-card">
+              <img src="https://raw.githubusercontent.com/andoeesntr/Praktikum-IPSI/main/portofolio/portofolio4.jpeg">
+            </div>
+            <div class="process-card">
+              <img src="https://raw.githubusercontent.com/andoeesntr/Praktikum-IPSI/main/portofolio/portofolio5.jpeg">
+            </div>
+            <div class="process-card">
+              <img src="finishing.jpg" alt="Finishing">
+              <div class="step">STEP <span>6</span></div>
+              <p>FINISHING</p>
+            </div>
+          </div>
+        </div>
+        <div class="navigation">
+          <button class="prev">&#8249;</button>
+          <button class="next">&#8250;</button>
+        </div>
+      </section>
+      <script>
+    const slider = document.querySelector('.process-slider');
+    const prevButton = document.querySelector('.prev');
+    const nextButton = document.querySelector('.next');
+    
+    let currentIndex = 0; // Indeks elemen aktif
+    const cardWidth = 320; // Lebar kotak + margin (300px + 20px)
+    const totalCards = slider.children.length;
+    
+    // Clone elemen untuk menciptakan efek looping
+    const firstCards = [];
+    const lastCards = [];
+    
+    // Clone 3 elemen pertama ke akhir
+    for (let i = 0; i < 3; i++) {
+      firstCards.push(slider.children[i].cloneNode(true));
+      slider.appendChild(firstCards[i]);
+    }
+    
+    // Clone 3 elemen terakhir ke awal
+    for (let i = totalCards - 3; i < totalCards; i++) {
+      lastCards.push(slider.children[i].cloneNode(true));
+      slider.prepend(lastCards[lastCards.length - 1]);
+    }
+    
+    // Update total elemen setelah cloning
+    const updatedTotalCards = slider.children.length;
+    
+    // Atur posisi awal slider
+    slider.style.transform = `translateX(-${3 * cardWidth}px)`;
+    
+    // Fungsi untuk memperbarui posisi slider
+    function updateSliderPosition() {
+      slider.style.transition = 'transform 0.5s ease-in-out';
+      slider.style.transform = `translateX(-${(currentIndex + 3) * cardWidth}px)`;
+    
+      slider.addEventListener('transitionend', () => {
+        // Jika sudah mencapai elemen terakhir (clone), lompat ke elemen pertama (asli)
+        if (currentIndex >= totalCards) {
+          slider.style.transition = 'none';
+          currentIndex = 0;
+          slider.style.transform = `translateX(-${3 * cardWidth}px)`;
+        }
+    
+        // Jika sudah mencapai elemen pertama (clone), lompat ke elemen terakhir (asli)
+        if (currentIndex < 0) {
+          slider.style.transition = 'none';
+          currentIndex = totalCards - 3;
+          slider.style.transform = `translateX(-${(currentIndex + 3) * cardWidth}px)`;
+        }
+      });
+    }
+    
+    // Tombol navigasi
+    prevButton.addEventListener('click', () => {
+      currentIndex--;
+      updateSliderPosition();
+    });
+    
+    nextButton.addEventListener('click', () => {
+      currentIndex++;
+      updateSliderPosition();
+    });
+    
+      </script>
+        
+    
+    <!-- Modal -->
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+    
+
+
+</body>
+   
+    <section id="booking" class="h-class">
+   <!-- Tambahkan Flatpickr CSS di <head> -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+<!-- Tambahkan style untuk intl-tel-input -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css">
+
+<div class="booking-container flex flex-col md:flex-row w-full max-w-1500px" id="booking">
+    <div class="left-content w-full md:w-1/2 p-6">
+        <h1 class="text-2xl md:text-4xl">Mempunyai sertifikat ahli & terpercaya dalam kendaraan bermotor.</h1>
+        <p class="text-sm md:text-base">Layanan perbaikan motor kami dirancang untuk memberikan solusi terbaik bagi kebutuhan kendaraan roda dua Anda. Kami menyediakan berbagai jenis layanan, mulai dari perawatan rutin seperti ganti oli dan pengecekan sistem, hingga perbaikan menyeluruh pada mesin, kelistrikan, dan komponen lainnya. Didukung oleh teknisi berpengalaman dan peralatan modern, kami memastikan kualitas, kecepatan, dan kepercayaan dalam setiap pekerjaan. Tujuan kami adalah menjaga motor Anda tetap dalam kondisi prima sehingga memberikan kenyamanan dan keamanan saat berkendara.</p>
+    </div>
+    <div class="right-content w-full md:w-1/2 flex justify-center p-6">
+        <div class="form-container">
+            <h2 class="text-center text-2xl text-red-500 font-bold mb-4">Book For A Service</h2>
+            <form id="bookingForm" action="#" method="post" class="flex flex-col gap-4">
+                <input type="text" name="name" placeholder="Your Name" class="p-2 border rounded w-full" required>
+                <input type="email" name="email" placeholder="Your Email" class="p-2 border rounded w-full" required>
+
+                <!-- Input telepon dengan kode negara -->
+                <div class="flex gap-2">
+                    <input type="tel" id="phone" name="phone" placeholder="Enter Your Phone Number" class="p-2 border rounded w-full" required>
+                </div>
+
+                <div class="flex flex-col md:flex-row gap-2">
+                    <select name="service" class="p-2 border rounded flex-1" required>
+                        <option value="">Select A Service</option>
+                        <option value="Service Ringan">Service Ringan</option>
+                        <option value="Service Berat">Service Berat</option>
+                        <option value="Optional">Optional</option>
+                         <!-- 'By Request' as an option -->
+                    </select>
+                    <!-- Added an input field that appears only if 'Optional' is selected -->
+                    <input type="text" name="optional_service" class="p-2 border rounded flex-1 hidden" placeholder="Please specify the requested service" id="optionalServiceInput">
+                    <input type="date" name="date" class="p-2 border rounded flex-1" required>
+                </div>
+                
+                <script>
+                    const serviceSelect = document.querySelector('select[name="service"]');
+                    const optionalServiceInput = document.getElementById('optionalServiceInput');
+                    
+                    serviceSelect.addEventListener('change', function() {
+                        if (serviceSelect.value === 'Optional') {
+                            optionalServiceInput.classList.remove('hidden');
+                        } else {
+                            optionalServiceInput.classList.add('hidden');
+                        }
+                    });
+                </script>
+                
+                <div class="flex flex-col md:flex-row gap-2">
+                    <input id="timePicker" type="text" name="time" placeholder="Select Time" class="p-2 border rounded flex-1" required>
+                </div>
+                <button type="submit" class="bg-blue-700 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-300">BOOK NOW</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- Tambahkan script intl-tel-input dan Flatpickr -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script>
+    // Inisialisasi intl-tel-input untuk input telepon
+    const phoneInput = document.querySelector("#phone");
+    const iti = window.intlTelInput(phoneInput, {
+        initialCountry: "id", // Set negara default (Indonesia)
+        preferredCountries: ["id", "us", "gb", "in", "jp", "fr"],
+        separateDialCode: true, // Tampilkan kode negara terpisah
+        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js", // Tambahkan script util untuk validasi
+    });
+
+    // Membatasi input hanya untuk angka
+    phoneInput.addEventListener("input", function () {
+        this.value = this.value.replace(/[^0-9]/g, ""); // Hapus karakter yang bukan angka
+    });
+
+    // Validasi nomor telepon saat form disubmit
+    document.getElementById("bookingForm").addEventListener("submit", function (event) {
+        if (!iti.isValidNumber()) {
+            // Jika nomor tidak valid
+            alert("Please enter a valid phone number that matches the selected country.");
+            event.preventDefault(); // Cegah form dari pengiriman
+        } else {
+            // Ambil nomor telepon lengkap
+            const fullNumber = iti.getNumber();
+            console.log("Valid phone number:", fullNumber);
+        }
+    });
+
+    // Inisialisasi Flatpickr untuk input waktu
+    flatpickr("#timePicker", {
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true,
+    });
+</script>
+
+<!-- CSS tambahan untuk memastikan input telepon dan dropdown terlihat -->
+<style>
+    /* Memastikan intl-tel-input mengambil seluruh lebar */
+    .iti {
+        width: 100% !important;
+    }
+
+    .iti input {
+        width: 100% !important;
+    }
+
+    /* Dropdown negara dari intl-tel-input */
+    .iti__country-list {
+        background-color: white; /* Latar belakang dropdown */
+        color: black; /* Warna teks default */
+        font-size: 14px; /* Ukuran font */
+        max-height: 200px; /* Batas tinggi dropdown */
+        overflow-y: auto; /* Tambahkan scroll untuk elemen panjang */
+        z-index: 1000; /* Pastikan dropdown berada di atas elemen lainnya */
+        border: 1px solid #ddd; /* Tambahkan border untuk estetika */
+        border-radius: 5px; /* Tambahkan sudut bulat */
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Tambahkan efek bayangan */
+    }
+
+    /* Gaya tiap opsi negara */
+    .iti__country {
+        padding: 8px 10px; /* Tambahkan jarak di dalam elemen */
+        cursor: pointer; /* Tunjukkan pointer saat di-hover */
+    }
+
+    /* Efek hover pada opsi negara */
+    .iti__country:hover {
+        background-color: #f0f0f0; /* Warna latar belakang saat di-hover */
+    }
+
+    /* Nama negara */
+    .iti__country-name {
+        font-weight: normal; /* Sesuaikan ketebalan teks */
+        color: #333; /* Warna teks untuk nama negara */
+    }
+
+    /* Kode negara */
+    .iti__dial-code {
+        color: #555; /* Warna teks untuk kode negara */
+    }
+</style>
+
+
+<script>
+    // Initialize EmailJS
+    (function(){
+        emailjs.init("YXogwFYAJff0wjD2v"); // Replace with your EmailJS user ID
+    })();
+
+    function sendEmail(event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        const btn = document.getElementById('button');
+        btn.value = 'Sending...';
+
+        const serviceID = 'service_6whygqk'; // Replace with your actual service ID
+        const templateID = 'template_wowcd3o'; // Replace with your actual template ID
+
+        emailjs.sendForm(serviceID, templateID, event.target)
+            .then(() => {
+                btn.value = 'Send Message';
+                alert('Email Terkirim!');
+                document.getElementById('contact-form').reset(); // Reset the form after successful submission
+            }, (err) => {
+                btn.value = 'Send Message';
+                alert(JSON.stringify(err));
+            });
+    }
+</script>
+<script> src="main.js"</script>
+        </div>
+    </section>
+<!-- Footer Section -->
+<footer class="bg-black text-white py-10">
+    <div class="container mx-auto px-4">
+        <!-- Menggunakan Grid Layout untuk memastikan ukuran sama rata dan simetris -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+
+            <!-- About Us Section (Posisi pertama) -->
+            <div class="flex flex-col justify-between px-4 h-full">
+                <h2 class="text-xl font-bold mb-4">About Us</h2>
+                
+                <!-- Logo kecil -->
+                <div class="flex justify-center md:justify-start mb-4">
+                    <img src="https://raw.githubusercontent.com/andoeesntr/Praktikum-IPSI/main/pasep/img/logo/pasep-white.png" alt="Pasep Garage Logo" class="h-12">
+                </div>
+
+                <p class="text-justify">
+                    PasepGarage Bengkel adalah website bengkel yang menjual berbagai macam aksesoris dan sparepart serta service yang cepat dan terpercaya. 
+                </p>
+            </div>
+
+
+            <!-- Quick Links Section (Posisi kedua) -->
+            <div class="flex flex-col justify-between px-4 h-full">
+                <h2 class="text-xl font-bold mb-4">Quick Links</h2>
+                <ul class="space-y-2">
+                    <li>
+                        <button class="hover:text-gray-300" onclick="scrollToSection('home')">Home</button>
+                    </li>
+                    <li>
+                        <button class="hover:text-gray-300" onclick="scrollToSection('about')">About Us</button>
+                    </li>
+                    <li>
+                        <button class="hover:text-gray-300" onclick="scrollToSection('booking')">Booking</button>
+                    </li>
+                    <li>
+                        <button class="hover:text-gray-300" onclick="scrollToSection('contact')">Contact</button>
+                    </li>
+                </ul>
+            </div>
+            <script>
+                function scrollToSection(sectionId) {
+                    document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+                }
+            </script>
+
+            <!-- Contact Us Section -->
+            <div class="flex flex-col justify-between px-4 h-full text-center md:text-left">
+                <h2 class="text-xl font-bold mb-4">Contact Us</h2>
+    
+                <!-- Simetris antara ikon dan teks -->
+                <p class="flex items-center justify-center md:justify-start mb-2">
+                    <i class="fas fa-map-marker-alt mr-2"></i>
+                    <a href="https://maps.app.goo.gl/XPucJWeBxYvMwBeCA" class="text-white" target="_blank">Pasep Garage, Cimahi</a>
+                </p>
+                <p class="flex items-center justify-center md:justify-start mb-2">
+                    <i class="fas fa-phone mr-2"></i>
+                    <a href="https://wa.me/6282117718448" class="text-white" target="_blank">+62 821 1771 8448</a>
+                </p>
+                <p class="flex items-center justify-center md:justify-start mb-2">
+                    <i class="fas fa-envelope mr-2"></i>
+                    <a href="https://shorturl.asia/QfX5n" target="_blank" class="text-white">pasepgarage@mailto.plus</a>
+                </p>
+            </div>
+
+        </div>
+    </div>
+</footer>
+
+</html>

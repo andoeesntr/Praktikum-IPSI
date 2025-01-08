@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Work Process</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<style>
+    body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
+.work-process {
+  text-align: center;
+  padding: 40px;
+  background-color: #fff;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.title span {
+  color: blue;
+}
+
+.slider-container {
+  overflow: hidden;
+  width: 960px; /* 3 kotak (300px each) + gap 2x 20px */
+  margin: 0 auto;
+}
+
+.process-slider {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.process-card {
+  background-color: gray;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 300px;
+  height: 300px; /* Tinggi kotak */
+  text-align: center;
+  flex-shrink: 0;
+  margin-right: 20px;
+}
+
+.process-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.step {
+  background-color: blue;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px auto;
+}
+
+.step span {
+  font-size: 18px;
+}
+
+.process-card p {
+  font-size: 16px;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.navigation {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.navigation button {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 50%;
+  font-size: 18px;
+}
+
+.navigation button:hover {
+  background-color: #eee;
+}
+
+</style>
+<body>
+  <section class="work-process">
+    <h2 class="title">WORK <span>PROCESS</span></h2>
+    <div class="slider-container">
+      <div class="process-slider">
+        <div class="process-card">
+          <img src="https://raw.githubusercontent.com/andoeesntr/Praktikum-IPSI/main/portofolio/portofolio1.jpeg">
+        </div>
+        <div class="process-card">
+          <img src="https://raw.githubusercontent.com/andoeesntr/Praktikum-IPSI/main/portofolio/portofolio2.jpeg">
+        </div>
+        <div class="process-card">
+          <img src="https://raw.githubusercontent.com/andoeesntr/Praktikum-IPSI/main/portofolio/portofolio3.jpeg">
+        </div>
+        <div class="process-card">
+          <img src="https://raw.githubusercontent.com/andoeesntr/Praktikum-IPSI/main/portofolio/portofolio4.jpeg">
+        </div>
+        <div class="process-card">
+          <img src="https://raw.githubusercontent.com/andoeesntr/Praktikum-IPSI/main/portofolio/portofolio5.jpeg">
+        </div>
+        <div class="process-card">
+          <img src="finishing.jpg" alt="Finishing">
+          <div class="step">STEP <span>6</span></div>
+          <p>FINISHING</p>
+        </div>
+      </div>
+    </div>
+    <div class="navigation">
+      <button class="prev">&#8249;</button>
+      <button class="next">&#8250;</button>
+    </div>
+  </section>
+  <script>
+const slider = document.querySelector('.process-slider');
+const prevButton = document.querySelector('.prev');
+const nextButton = document.querySelector('.next');
+
+let currentIndex = 0; // Indeks elemen aktif
+const cardWidth = 320; // Lebar kotak + margin (300px + 20px)
+const totalCards = slider.children.length;
+
+// Clone elemen untuk menciptakan efek looping
+const firstCards = [];
+const lastCards = [];
+
+// Clone 3 elemen pertama ke akhir
+for (let i = 0; i < 3; i++) {
+  firstCards.push(slider.children[i].cloneNode(true));
+  slider.appendChild(firstCards[i]);
+}
+
+// Clone 3 elemen terakhir ke awal
+for (let i = totalCards - 3; i < totalCards; i++) {
+  lastCards.push(slider.children[i].cloneNode(true));
+  slider.prepend(lastCards[lastCards.length - 1]);
+}
+
+// Update total elemen setelah cloning
+const updatedTotalCards = slider.children.length;
+
+// Atur posisi awal slider
+slider.style.transform = `translateX(-${3 * cardWidth}px)`;
+
+// Fungsi untuk memperbarui posisi slider
+function updateSliderPosition() {
+  slider.style.transition = 'transform 0.5s ease-in-out';
+  slider.style.transform = `translateX(-${(currentIndex + 3) * cardWidth}px)`;
+
+  slider.addEventListener('transitionend', () => {
+    // Jika sudah mencapai elemen terakhir (clone), lompat ke elemen pertama (asli)
+    if (currentIndex >= totalCards) {
+      slider.style.transition = 'none';
+      currentIndex = 0;
+      slider.style.transform = `translateX(-${3 * cardWidth}px)`;
+    }
+
+    // Jika sudah mencapai elemen pertama (clone), lompat ke elemen terakhir (asli)
+    if (currentIndex < 0) {
+      slider.style.transition = 'none';
+      currentIndex = totalCards - 3;
+      slider.style.transform = `translateX(-${(currentIndex + 3) * cardWidth}px)`;
+    }
+  });
+}
+
+// Tombol navigasi
+prevButton.addEventListener('click', () => {
+  currentIndex--;
+  updateSliderPosition();
+});
+
+nextButton.addEventListener('click', () => {
+  currentIndex++;
+  updateSliderPosition();
+});
+
+  </script>
+</body>
+</html>
