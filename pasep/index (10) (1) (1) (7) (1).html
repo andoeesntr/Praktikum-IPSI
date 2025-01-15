@@ -120,13 +120,13 @@
 
     /* Efek hover: Teks menyala saat pointer mouse berada di atas */
 nav a:hover {
-    color: rgb(38, 0, 255); /* Warna teks menyala */
+    color: rgb(0, 0, 0); /* Warna teks menyala */
     transition: color 0.3s ease; /* Efek transisi lembut */
 }
 
 /* Efek aktif: Teks tetap menyala saat berada di konten */
 nav a.active {
-    color: rgb(51, 0, 255); /* Warna teks menyala */
+    color: rgb(0, 0, 0); /* Warna teks menyala */
     font-weight: bold; /* Opsional: Membuat teks lebih tebal */
     transition: color 0.3s ease;
 }
@@ -388,7 +388,7 @@ nav a.active {
     </div>
 
     <!-- Menu Mobile -->
-    <div id="mobile-menu" class="hidden bg-blue-500 md:hidden">
+    <div id="mobile-menu" class="hidden bg-black-500 md:hidden">
         <a class="block py-2 px-4 text-lg font-semibold hover:bg-blue-400" href="#home">HOME</a>
         <a class="block py-2 px-4 text-lg font-semibold hover:bg-blue-400" href="#about">ABOUT</a>
         <a class="block py-2 px-4 text-lg font-semibold hover:bg-blue-400" href="#portfolio">PORTFOLIO</a>
@@ -488,7 +488,7 @@ nav a.active {
         <div class="max-w-md mx-auto p-6">
             <h1 class="text-xl font-bold mb-4 animate__animated animate__fadeIn">ABOUT</h1>
             <div class="flex items-center mb-4 animate__animated animate__fadeIn">
-                <img alt="WaOne Bengkel Online logo with a hexagon and stylized W" class="w-24 h-24 mr-4" src="https://raw.githubusercontent.com/andoeesntr/Praktikum-IPSI/main/pasep/img/logo/pasep-white.png"/>
+                <img alt="Pasep Garage" class="w-24 h-24 mr-4" src="https://raw.githubusercontent.com/andoeesntr/Praktikum-IPSI/main/pasep/img/logo/pasep-white.png"/>
                 <div>
                     <h2 class="text-4xl font-bold text-blue-800">Pasep<span class="text-blue-400">Garage</span></h2>
                     <h3 class="text-2xl text-gray-500">Bengkel Motor</h3>
@@ -517,25 +517,20 @@ nav a.active {
         <div class="slider-container">
           <div class="process-slider">
             <div class="process-card">
-              <img src="https://raw.githubusercontent.com/andoeesntr/Praktikum-IPSI/main/portofolio/portofolio1.jpeg">
+              <img src="https://raw.githubusercontent.com/andoeesntr/Praktikum-IPSI/main/pasep/img/portofolio/portofolio1.jpeg">
             </div>
             <div class="process-card">
-              <img src="https://raw.githubusercontent.com/andoeesntr/Praktikum-IPSI/main/portofolio/portofolio2.jpeg">
+              <img src="https://raw.githubusercontent.com/andoeesntr/Praktikum-IPSI/main/pasep/img/portofolio/portofolio2.jpeg">
             </div>
             <div class="process-card">
-              <img src="https://raw.githubusercontent.com/andoeesntr/Praktikum-IPSI/main/portofolio/portofolio3.jpeg">
+              <img src="https://raw.githubusercontent.com/andoeesntr/Praktikum-IPSI/main/pasep/img/portofolio/portofolio3.jpeg">
             </div>
             <div class="process-card">
-              <img src="https://raw.githubusercontent.com/andoeesntr/Praktikum-IPSI/main/portofolio/portofolio4.jpeg">
+              <img src="https://raw.githubusercontent.com/andoeesntr/Praktikum-IPSI/main/pasep/img/portofolio/portofolio4.jpeg">
             </div>
             <div class="process-card">
-              <img src="https://raw.githubusercontent.com/andoeesntr/Praktikum-IPSI/main/portofolio/portofolio5.jpeg">
-            </div>
-            <div class="process-card">
-              <img src="finishing.jpg" alt="Finishing">
-              <div class="step">STEP <span>6</span></div>
-              <p>FINISHING</p>
-            </div>
+              <img src="https://raw.githubusercontent.com/andoeesntr/Praktikum-IPSI/main/pasep/img/portofolio/portofolio5.jpeg">
+            </div>  
           </div>
         </div>
         <div class="navigation">
@@ -620,7 +615,8 @@ nav a.active {
 
 </body>
    
-    <section id="booking" class="h-class">
+    <section id="bookingForm" class="h-class">
+        <form id="bookingForm" name="bookingForm" ></form>
    <!-- Tambahkan Flatpickr CSS di <head> -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
@@ -635,7 +631,7 @@ nav a.active {
     <div class="right-content w-full md:w-1/2 flex justify-center p-6">
         <div class="form-container">
             <h2 class="text-center text-2xl text-red-500 font-bold mb-4">Book For A Service</h2>
-            <form id="bookingForm" action="#" method="post" class="flex flex-col gap-4">
+            <form id="bookingForm" onsubmit="sendEmail(event)" action="#" method="post" class="flex flex-col gap-4">
                 <input type="text" name="name" placeholder="Your Name" class="p-2 border rounded w-full" required>
                 <input type="email" name="email" placeholder="Your Email" class="p-2 border rounded w-full" required>
 
@@ -673,7 +669,7 @@ nav a.active {
                 <div class="flex flex-col md:flex-row gap-2">
                     <input id="timePicker" type="text" name="time" placeholder="Select Time" class="p-2 border rounded flex-1" required>
                 </div>
-                <button type="submit" class="bg-blue-700 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-300">BOOK NOW</button>
+                <button type="submit" class="bg-blue-700 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-300" id="button" name="button">BOOK NOW</button>
             </form>
         </div>
     </div>
@@ -768,33 +764,39 @@ nav a.active {
     }
 </style>
 
-
 <script>
     // Initialize EmailJS
-    (function(){
-        emailjs.init("YXogwFYAJff0wjD2v"); // Replace with your EmailJS user ID
+    (function() {
+        emailjs.init("iBOTM_Mr7kiOGGfNr"); // Gantilah dengan user ID Anda
     })();
 
     function sendEmail(event) {
-        event.preventDefault(); // Prevent the default form submission
+    event.preventDefault(); // Mencegah form dikirim secara default
 
-        const btn = document.getElementById('button');
-        btn.value = 'Sending...';
+    const btn = document.getElementById('button');
+    btn.innerHTML = 'Sending...'; // Ganti value menjadi innerHTML agar sesuai dengan elemen button
 
-        const serviceID = 'service_6whygqk'; // Replace with your actual service ID
-        const templateID = 'template_wowcd3o'; // Replace with your actual template ID
+    const serviceID = 'pasep_garagexyz'; // Gantilah dengan service ID Anda
+    const templateID = 'pasep_garage_temp'; // Gantilah dengan template ID Anda
 
-        emailjs.sendForm(serviceID, templateID, event.target)
-            .then(() => {
-                btn.value = 'Send Message';
-                alert('Email Terkirim!');
-                document.getElementById('contact-form').reset(); // Reset the form after successful submission
-            }, (err) => {
-                btn.value = 'Send Message';
-                alert(JSON.stringify(err));
-            });
-    }
+    console.log("Form Data: ", new FormData(event.target));
+
+    // Kirim data form ke EmailJS
+    emailjs.sendForm(serviceID, templateID, event.target)
+        .then((response) => {
+            console.log("Email Sent Successfully:", response); // Log respons
+            btn.innerHTML = 'BOOK NOW'; // Ganti kembali button text
+            alert('Email Terkirim!');
+            document.getElementById('bookingForm').reset(); // Reset form setelah berhasil
+        }, (err) => {
+            console.error("Email Sending Failed:", err); // Log error
+            btn.innerHTML = 'BOOK NOW'; // Ganti kembali button text pada error
+            alert('Gagal mengirim email: ' + JSON.stringify(err));
+        });
+}
+
 </script>
+
 <script> src="main.js"</script>
         </div>
     </section>
@@ -824,16 +826,16 @@ nav a.active {
                 <h2 class="text-xl font-bold mb-4">Quick Links</h2>
                 <ul class="space-y-2">
                     <li>
-                        <button class="hover:text-gray-300" onclick="scrollToSection('home')">Home</button>
+                        <button class="hover:text-blue-500" onclick="scrollToSection('home')">Home</button>
                     </li>
                     <li>
-                        <button class="hover:text-gray-300" onclick="scrollToSection('about')">About Us</button>
+                        <button class="hover:text-blue-500" onclick="scrollToSection('about')">About Us</button>
                     </li>
                     <li>
-                        <button class="hover:text-gray-300" onclick="scrollToSection('booking')">Booking</button>
+                        <button class="hover:text-blue-500" onclick="scrollToSection('portfolio')">Portfolio</button>
                     </li>
                     <li>
-                        <button class="hover:text-gray-300" onclick="scrollToSection('contact')">Contact</button>
+                        <button class="hover:text-blue-500" onclick="scrollToSection('booking')">Booking</button>
                     </li>
                 </ul>
             </div>
